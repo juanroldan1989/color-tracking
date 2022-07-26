@@ -149,5 +149,19 @@
   <footer>
     <a href="https://juanroldan.com.ar">juanroldan.com.ar</a>
   </footer>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("td").hover(function(){
+        var color = this.className;
+        console.log("Hovered on color: ", color);
+      });
+
+      $("td").click(function(){
+        var color = this.className;
+        console.log("Clicked on color: ", color);
+      });
+    });
+  </script>
 </body>
 </html>
