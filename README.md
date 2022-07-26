@@ -23,10 +23,10 @@ Implementation details:
 - `id`: Integer
 - `name`: String (e.g.: "hover", "click")
 
-## ColorActions
+## ActionColors
 
 - `id`: Integer
 - `user_id`: Integer
-- `color_id`: Integer (e.g.: "Red")
 - `action_id`: Integer (e.g.: "Click")
+- `color_id`: Integer (e.g.: "Red")
 - `amount`: Integer (e.g.: "30")

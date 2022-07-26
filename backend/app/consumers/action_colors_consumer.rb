@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-# Example consumer that prints messages payloads
-class ExampleConsumer < ApplicationConsumer
+class ActionColorsConsumer < ApplicationConsumer
+
+  # Consumes the messages by inserting all of them in one go into the DB
   def consume
-    messages.each { |message| puts message.payload }
+    ::ActionColor.insert_all messages.payloads
   end
 
   # Run anything upon partition being revoked
