@@ -155,11 +155,15 @@
       $("td").hover(function(){
         var color = this.className;
         console.log("Hovered on color: ", color);
+
+        $.post("http://localhost:3000/v1/action_colors", { action_color: { user_id: "1", action_name: "hover", color_name: color} });
       });
 
       $("td").click(function(){
         var color = this.className;
         console.log("Clicked on color: ", color);
+
+        $.post("http://localhost:3000/v1/action_colors", { action_color: { user_id: "1", action_name: "click", color_name: color} });
       });
     });
   </script>

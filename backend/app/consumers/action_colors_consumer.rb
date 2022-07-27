@@ -4,7 +4,7 @@ class ActionColorsConsumer < ApplicationConsumer
 
   # Consumes the messages by inserting all of them in one go into the DB
   def consume
-    ::ActionColor.insert_all messages.payloads
+    ActionColor.create!(messages.payloads)
   end
 
   # Run anything upon partition being revoked

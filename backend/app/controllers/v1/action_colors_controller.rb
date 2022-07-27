@@ -8,7 +8,14 @@ module V1
     end
 
     def create
-      Karafka.producer.produce_async(topic: "action_colors", payload: { user_id: assign_user_id, action_id: 1, color_id: 2 }.to_json)
+      Karafka.producer.produce_async(
+        topic: "action_colors",
+        payload: {
+          user_id: assign_user_id,
+          action_id: action_id,
+          color_id: color_id
+        }.to_json
+      )
     end
 
     private
@@ -22,13 +29,13 @@ module V1
     end
 
     def action_id
-      Action.find_by_name(create_params[:action_color][:action_name])
+      Action.find_by_name(create_params["action_name"]).id
     rescue
       Action.first.id
     end
 
     def color_id
-      Color.find_by_name(create_params[:action_color][:color_name])
+      Color.find_by_name(create_params["color_name"]).id
     rescue
       Color.first.id
     end
