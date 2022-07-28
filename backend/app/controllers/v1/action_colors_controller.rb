@@ -4,7 +4,32 @@ module V1
     before_action :assign_user_id
 
     def index
-      render json: { data: ActionColor.all }
+      records = ActionColor.by_action(index_params[:action_name])
+
+      render json: {
+        data: [
+          {
+            "action" => "hover",
+            "color" => "red",
+            "amount" => "236"
+          },
+          {
+            "action" => "hover",
+            "color" => "blue",
+            "amount" => "120"
+          },
+          {
+            "action" => "hover",
+            "color" => "yellow",
+            "amount" => "250"
+          },
+          {
+            "action" => "hover",
+            "color" => "green",
+            "amount" => "780"
+          }
+        ]
+      }
     end
 
     def create
@@ -19,6 +44,10 @@ module V1
     end
 
     private
+
+    def index_params
+      params.permit(:action_name)
+    end
 
     def create_params
       params.require(:action_color).permit(:user_id, :action_name, :color_name)

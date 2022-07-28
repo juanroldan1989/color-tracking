@@ -1,4 +1,8 @@
 class ActionColor < ApplicationRecord
+  belongs_to :action
+  belongs_to :color
+
+  scope :by_action, (action_name) -> { join(:actions).where(action: { name: action_name }) }
 
   before_save :set_amount
 

@@ -74,7 +74,11 @@
     }
   </style>
 
+  <!-- Load jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <!-- Load d3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script>
 </head>
 <body>
   <div class="split left">
@@ -133,12 +137,13 @@
   </div>
 
   <div class="split right">
-    <div class="centered">
-      <!-- <img src="img_avatar.png" alt="Avatar man"> -->
+    <div class="centered title">
       <h2>Live Results</h2>
-      <!-- <p>Some text here too.</p> -->
+      <!-- <p>Some text.</p> -->
+    </div>
 
-      <!-- Summary Graphs in real time -->
+    <div class="centered content">
+      <div id="my_dataviz" class="img"></div>
 
       <!-- Colors Hovered On -->
 
@@ -150,6 +155,7 @@
     <a href="https://juanroldan.com.ar">juanroldan.com.ar</a>
   </footer>
 
+  <!-- Events Generation -->
   <script type="text/javascript">
     $(document).ready(function() {
       $("td").hover(function(){
@@ -167,5 +173,55 @@
       });
     });
   </script>
+  <!-- Events Generation -->
+
+  <!-- Graphs Generation -->
+  <script type="text/javascript">
+
+  // set the dimensions and margins of the graph
+  var width = 450
+      height = 450
+      margin = 40
+
+  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius = Math.min(width, height) / 2 - margin
+
+  // append the svg object to the div called 'my_dataviz'
+  var svg = d3.select("#my_dataviz")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  // Create dummy data
+  var data = {a: 9, b: 20, c:30, d:8, e:12}
+
+  // set the color scale
+  var color = d3.scaleOrdinal()
+    .domain(data)
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"])
+
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) {return d.value; })
+  var data_ready = pie(d3.entries(data))
+
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  svg
+    .selectAll('whatever')
+    .data(data_ready)
+    .enter()
+    .append('path')
+    .attr('d', d3.arc()
+      .innerRadius(100)         // This is the size of the donut hole
+      .outerRadius(radius)
+    )
+    .attr('fill', function(d){ return(color(d.data.key)) })
+    .attr("stroke", "black")
+    .style("stroke-width", "2px")
+    .style("opacity", 0.7)
+  </script>
+  <!-- Graphs Generation -->
 </body>
 </html>
