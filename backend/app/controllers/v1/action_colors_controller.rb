@@ -4,31 +4,20 @@ module V1
     before_action :assign_user_id
 
     def index
-      records = ActionColor.by_action(index_params[:action_name])
+      results = colors.map do |color|
+        record = ActionColor.includes(:action).by_color(color).last
+
+        next unless record.present?
+
+        {
+          "action" => record.action.name,
+          "color"  => color,
+          "amount" => record.amount
+        }
+      end
 
       render json: {
-        results: [
-          {
-            "action" => "hover",
-            "color" => "red",
-            "amount" => "236"
-          },
-          {
-            "action" => "hover",
-            "color" => "blue",
-            "amount" => "120"
-          },
-          {
-            "action" => "hover",
-            "color" => "yellow",
-            "amount" => "250"
-          },
-          {
-            "action" => "hover",
-            "color" => "green",
-            "amount" => "780"
-          }
-        ]
+        results: results
       }
     end
 
@@ -67,6 +56,10 @@ module V1
       Color.find_by_name(create_params["color_name"]).id
     rescue
       Color.first.id
+    end
+
+    def colors
+      @colors ||= Color.all.pluck(:name).sort
     end
   end
 end
