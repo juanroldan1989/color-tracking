@@ -7,7 +7,7 @@ module V1
       records = ActionColor.by_action(index_params[:action_name])
 
       render json: {
-        data: [
+        results: [
           {
             "action" => "hover",
             "color" => "red",
