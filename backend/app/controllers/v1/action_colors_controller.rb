@@ -16,9 +16,7 @@ module V1
         }
       end
 
-      render json: {
-        results: results
-      }
+      render json: { results: results }
     end
 
     def create

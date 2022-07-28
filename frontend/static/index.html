@@ -24,7 +24,7 @@
     /* Control the right side */
     .right {
       right: 0;
-      background-color: red;
+      background-color: gray;
     }
 
     /* If you want the content centered horizontally and vertically */
@@ -37,7 +37,7 @@
     }
 
     .centered.title {
-      top: 20%;
+      top: 10%;
     }
 
     .centered.content {
@@ -52,8 +52,8 @@
 
     /* Table */
     table {
-      width: 300px;
-      height: 300px;
+      width: 500px;
+      height: 600px;
     }
 
     /* Colors */
@@ -83,63 +83,14 @@
 <body>
   <div class="split left">
     <div class="centered title">
-      <!-- <img src="img_avatar2.png" alt="Avatar woman"> -->
-      <h2>Hover & Click on Colors</h2>
-      <!-- <p>Some text.</p> -->
+      <h2>Try Hover/Click on Colors</h2>
     </div>
-
-    <div class="centered content">
-      <table>
-        <tr>
-          <td class="green"></td>
-          <td class="green"></td>
-          <td class="red"></td>
-          <td class="blue"></td>
-        </tr>
-        <tr>
-          <td class="green"></td>
-          <td class="red"></td>
-          <td class="green"></td>
-          <td class="red"></td>
-        </tr>
-        <tr>
-          <td class="green"></td>
-          <td class="green"></td>
-          <td class="red"></td>
-          <td class="green"></td>
-        </tr>
-        <tr>
-          <td class="blue"></td>
-          <td class="red"></td>
-          <td class="green"></td>
-          <td class="yellow"></td>
-        </tr>
-        <tr>
-          <td class="green"></td>
-          <td class="green"></td>
-          <td class="blue"></td>
-          <td class="red"></td>
-        </tr>
-        <tr>
-          <td class="green"></td>
-          <td class="yellow"></td>
-          <td class="green"></td>
-          <td class="blue"></td>
-        </tr>
-        <tr>
-          <td class="red"></td>
-          <td class="blue"></td>
-          <td class="yellow"></td>
-          <td class="green"></td>
-        </tr>
-      </table>
-    </div>
+    <div id="table_colors" class="centered content"></div>
   </div>
 
   <div class="split right">
     <div class="centered title">
       <h2>Live Results</h2>
-      <!-- <p>Some text.</p> -->
     </div>
 
     <div class="centered content">
@@ -175,15 +126,35 @@
   </script>
   <!-- Events Generation -->
 
+  <!-- Table Colors Generation -->
+  <script type="text/javascript">
+    var rows = 5;
+    var columns = 5;
+    var table = $("<table>");
+
+    for (var i = 0; i < columns; i++) {
+      table.append("<tr>");
+
+      for (var j = 0; j < rows; j++) {
+        var colors = ["blue", "green", "red", "yellow"];
+        var random = Math.floor(Math.random() * colors.length);
+        table.append("<td class='" + colors[random] + "'></td>");
+      };
+
+      table.append("</tr>");
+    };
+
+    table.append("</table>");
+
+    $("#table_colors").append(table);
+  </script>
+  <!-- Table Colors Generation -->
+
   <!-- Graphs Generation -->
   <script type="text/javascript">
 
     // refresh graph from API response every 1 second
     setInterval(function(){ 
-      // $.get("http://localhost:3000/v1/action_colors?action_name=hover", function(data, status){
-      //     console.log("Data: " + data[0] + "\nStatus: " + status);
-      // });
-
       var colors = [];
       var colorsAndAmounts = {};
 
@@ -258,7 +229,6 @@
       });
 
     }, 1000);
-
   </script>
   <!-- Graphs Generation -->
 </body>
