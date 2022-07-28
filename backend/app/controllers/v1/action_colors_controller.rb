@@ -1,3 +1,5 @@
+# TODO: authenticate users with API Keys | Social networks | Cognito
+
 module V1
   class ActionColorsController < ApplicationController
 
