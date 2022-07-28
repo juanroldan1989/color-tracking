@@ -1,5 +1,9 @@
 # TODO: authenticate users with API Keys | Social networks | Cognito
 
+# TODO: API could store "coordenates"
+#  - Then "replay mouse movement" functionality can be built on top
+#  - Then "heatmap" generation functionality can be built on top
+
 module V1
   class ActionColorsController < ApplicationController
 
