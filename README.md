@@ -1,35 +1,35 @@
 # Color Tracking App
 
-Implementation details:
+## Thoughts and Inspiration
 
 <div align="left">
   <img width="400" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking.jpeg" />
 </div>
 
-# Karafka trobleshooting
+## Karafka trobleshooting
 
 ```ruby
 $ brew services stop/start kafka
 $ brew services stop/start zookeeper
 ```
 
-# Database implementation
+## Database implementation
 
-## User
+### User
 
 - `api_key`: String
 
-## Colors
+### Colors
 
 - `id`: Integer
 - `name`: String (e.g.: "blue", "red")
 
-## Actions
+### Actions
 
 - `id`: Integer
 - `name`: String (e.g.: "hover", "click")
 
-## ActionColors
+### ActionColors
 
 - `id`: Integer
 - `api_key`: String
