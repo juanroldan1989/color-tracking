@@ -17,8 +17,7 @@ $ brew services stop/start zookeeper
 
 ## User
 
-- `id`: Integer (`session[:visitor_id] ||= SecureRandom.uuid`)
-- `created_at`: DateTime (`Time.zone.now`)
+- `api_key`: String
 
 ## Colors
 
