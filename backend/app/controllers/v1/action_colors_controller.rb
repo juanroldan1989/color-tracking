@@ -7,7 +7,13 @@ module V1
 
     def index
       results = colors.map do |color|
-        record = ActionColor.includes(:action).by_color(color).last
+        records = ActionColor.includes(:action).includes(:color).by_color(color)
+
+        if index_params["action_name"].present?
+          records = records.by_action(index_params["action_name"])
+        end
+
+        record = records.last
 
         next unless record.present?
 
@@ -25,7 +31,7 @@ module V1
       Karafka.producer.produce_async(
         topic: topic,
         payload: {
-          api_key: @api_key,
+          api_key: @user.api_key,
           action_id: action_id,
           color_id: color_id
         }.to_json

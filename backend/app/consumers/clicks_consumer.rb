@@ -5,9 +5,10 @@ class ClicksConsumer < ApplicationConsumer
   # Consumes the messages by inserting all of them in one go into the DB
   def consume
     ActionColor.create!(messages.payloads)
-  rescue
+  rescue => e
     # e.g.: `action_id` is nil -> `rollback transaction` error rescued
     #        so Karafka is able to continue processing events
+    Rails.logger.error "ClicksConsumer - consume failed: #{e.message}"
     nil
   end
 

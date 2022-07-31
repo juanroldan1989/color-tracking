@@ -6,6 +6,10 @@ class ActionColor < ApplicationRecord
 
   scope :by_action_id, -> (action_id) { where(action_id: action_id) }
 
+  scope :by_action, -> (action_name) {
+    joins(:action).where(actions: { name: action_name })
+  }
+
   scope :by_color, -> (color_name) {
     joins(:color).where(colors: { name: color_name })
   }

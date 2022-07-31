@@ -17,12 +17,12 @@ class ApplicationController < ActionController::API
     Rails.logger.info "authenticate_token!"
     authenticate_with_http_token do |token, options|
       Rails.logger.info "authenticate_token - token: #{token}"
-      @api_key = User.find_by(api_key: token)
+      @user = User.find_by(api_key: token)
 
-      Rails.logger.info "authenticate_token - @api_key: #{@api_key.inspect}"
+      Rails.logger.info "authenticate_token - @user: #{@user.inspect}"
 
-      if @api_key.present?
-        @api_key
+      if @user.present?
+        @user
       else
         render_unauthorized
       end
