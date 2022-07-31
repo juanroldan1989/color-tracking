@@ -23,7 +23,7 @@ module V1
 
     def create
       Karafka.producer.produce_async(
-        topic: "action_colors",
+        topic: topic,
         payload: {
           api_key: @api_key,
           action_id: action_id,
@@ -35,11 +35,11 @@ module V1
     private
 
     def index_params
-      params.permit(:api_key, :action_name)
+      params.permit(:action_name)
     end
 
     def create_params
-      params.require(:action_color).permit(:api_key, :action_name, :color_name)
+      params.require(:action_color).permit(:action_name, :color_name)
     end
 
     def action_id
@@ -56,6 +56,15 @@ module V1
 
     def colors
       @colors ||= Color.select(:name).pluck(:name).sort
+    end
+
+    def topic
+      case create_params["action_name"]
+      when "hover"
+        "hover_on_colors"
+      when "click"
+        "click_on_colors"
+      end
     end
   end
 end

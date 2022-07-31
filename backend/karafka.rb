@@ -25,8 +25,12 @@ class KarafkaApp < Karafka::App
     # You ned to define the topic per each queue name you use
     # active_job_topic :default
 
-    topic :action_colors do
-      consumer ActionColorsConsumer
+    topic :click_on_colors do
+      consumer ClicksConsumer
+    end
+
+    topic :hover_on_colors do
+      consumer HoversConsumer
     end
   end
 end
