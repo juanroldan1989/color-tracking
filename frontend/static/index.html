@@ -212,7 +212,6 @@
             .append("g")
               .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-          // TODO: display numbers `inside` graph bar
           var data = {
             a: colorsAndAmounts["blue"],
             b: colorsAndAmounts["green"],
@@ -232,20 +231,35 @@
             .value(function(d) {return d.value; })
           var data_ready = pie(d3.entries(data))
 
+          // shape helper to build arcs:
+          var arcGenerator = d3.arc()
+            .innerRadius(50)
+            .outerRadius(radius)
+
           // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
           svg
-            .selectAll('whatever')
+            .selectAll("whatever")
             .data(data_ready)
             .enter()
-            .append('path')
-            .attr('d', d3.arc()
-              .innerRadius(100)         // This is the size of the donut hole
+            .append("path")
+            .attr("d", d3.arc()
+              .innerRadius(50)         // This is the size of the donut hole
               .outerRadius(radius)
             )
-            .attr('fill', function(d){ return(color(d.data.key)) })
-            .attr("stroke", "black")
-            .style("stroke-width", "2px")
+            .attr("fill", function(d){ return(color(d.data.key)) })
+            .attr("stroke", "grey")
+            .style("stroke-width", "5px")
             .style("opacity", 0.7)
+
+          svg
+            .selectAll("whatever")
+            .data(data_ready)
+            .enter()
+            .append("text")
+            .text(function(d){ return d.data.value })
+            .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+            .style("text-anchor", "middle")
+            .style("font-size", 35)
         }
       });
 
