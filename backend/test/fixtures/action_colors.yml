@@ -2,14 +2,16 @@
 
 one:
   id: 1
-  user_id: 1
+  api_key: "testing"
+  user_id: "1"
   action_id: 1
   color_id: 1
   amount: 1
 
 two:
   id: 1
-  user_id: 1
+  api_key: "testing"
+  user_id: "1"
   action_id: 1
   color_id: 1
   amount: 1
