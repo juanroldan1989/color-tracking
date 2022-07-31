@@ -7,7 +7,9 @@ module V1
 
     def index
       results = colors.map do |color|
-        records = ActionColor.includes(:action).includes(:color).by_color(color)
+        records = ActionColor.includes(:action).includes(:color).
+          by_api_key(@user.api_key).
+          by_color(color)
 
         if index_params["action_name"].present?
           records = records.by_action(index_params["action_name"])
@@ -20,7 +22,7 @@ module V1
         {
           "action" => record.action.name,
           "color"  => color,
-          "amount" => record.amount
+          "amount" => records.maximum(:amount)
         }
       end
 
