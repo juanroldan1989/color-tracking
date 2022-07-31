@@ -13,7 +13,6 @@
 ActiveRecord::Schema[7.0].define(version: 2022_07_26_231431) do
   create_table "action_colors", force: :cascade do |t|
     t.string "api_key", null: false
-    t.string "user_id", null: false
     t.integer "action_id", null: false
     t.integer "color_id", null: false
     t.integer "amount", default: 0, null: false
@@ -23,7 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_231431) do
     t.index ["amount"], name: "index_action_colors_on_amount"
     t.index ["api_key"], name: "index_action_colors_on_api_key"
     t.index ["color_id"], name: "index_action_colors_on_color_id"
-    t.index ["user_id"], name: "index_action_colors_on_user_id"
   end
 
   create_table "actions", force: :cascade do |t|

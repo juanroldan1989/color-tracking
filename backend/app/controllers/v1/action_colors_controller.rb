@@ -1,13 +1,9 @@
-# TODO: authenticate users with API Keys | Social networks | Cognito
-
 # TODO: API could store "coordenates"
 #  - Then "replay mouse movement" functionality can be built on top
 #  - Then "heatmap" generation functionality can be built on top
 
 module V1
   class ActionColorsController < ApplicationController
-
-    before_action :assign_user_id
 
     def index
       results = colors.map do |color|
@@ -22,14 +18,14 @@ module V1
         }
       end
 
-      render json: { results: results }
+      render json: { results: results.compact }
     end
 
     def create
       Karafka.producer.produce_async(
         topic: "action_colors",
         payload: {
-          user_id: assign_user_id,
+          api_key: @api_key,
           action_id: action_id,
           color_id: color_id
         }.to_json
@@ -39,15 +35,11 @@ module V1
     private
 
     def index_params
-      params.permit(:action_name)
+      params.permit(:api_key, :action_name)
     end
 
     def create_params
-      params.require(:action_color).permit(:user_id, :action_name, :color_name)
-    end
-
-    def assign_user_id
-      @assign_user_id ||= SecureRandom.uuid
+      params.require(:action_color).permit(:api_key, :action_name, :color_name)
     end
 
     def action_id
@@ -63,7 +55,7 @@ module V1
     end
 
     def colors
-      @colors ||= Color.all.pluck(:name).sort
+      @colors ||= Color.select(:name).pluck(:name).sort
     end
   end
 end

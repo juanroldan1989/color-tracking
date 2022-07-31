@@ -3,7 +3,6 @@
 one:
   id: 1
   api_key: "testing"
-  user_id: "1"
   action_id: 1
   color_id: 1
   amount: 1
@@ -11,7 +10,6 @@ one:
 two:
   id: 1
   api_key: "testing"
-  user_id: "1"
   action_id: 1
   color_id: 1
   amount: 1

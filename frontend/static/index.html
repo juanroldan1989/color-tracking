@@ -113,14 +113,30 @@
         var color = this.className;
         console.log("Hovered on color: ", color);
 
-        $.post("http://localhost:3000/v1/action_colors", { action_color: { user_id: "1", action_name: "hover", color_name: color} });
+        // $.post("http://localhost:3000/v1/action_colors", { action_color: { api_key: "1", action_name: "hover", color_name: color} });
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/v1/action_colors",
+          data: { action_color: { action_name: "hover", color_name: color } },
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Token token=testing");
+          }
+        });
       });
 
       $("td").click(function(){
         var color = this.className;
         console.log("Clicked on color: ", color);
 
-        $.post("http://localhost:3000/v1/action_colors", { action_color: { user_id: "1", action_name: "click", color_name: color} });
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:3000/v1/action_colors",
+          data: { action_color: { action_name: "click", color_name: color } },
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Token token=testing");
+          }
+        });
       });
     });
   </script>
@@ -154,16 +170,20 @@
   <script type="text/javascript">
 
     // refresh graph from API response every 1 second
-    setInterval(function(){ 
+    // TODO: refresh graph through websockets -> real-time
+    setInterval(function(){
       var colors = [];
       var colorsAndAmounts = {};
 
       $.ajax({
-        type    : "GET",
+        type: "GET",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        url      : "http://localhost:3000/v1/action_colors?action_name=hover",
-        success  : function(data){
+        url: "http://localhost:3000/v1/action_colors",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization", "Token token=testing");
+        },
+        success: function(data){
 
           $.each( data.results, function( key, val ) {
             colors.push(val.color);
