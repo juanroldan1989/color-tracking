@@ -37,17 +37,12 @@
     }
 
     .centered.title {
-      top: 10%;
+      top: 5%;
+      font-size: 1.5em;
     }
 
     .centered.content {
       top: 50%;
-    }
-
-    /* Style the image inside the centered container, if needed */
-    .centered img {
-      width: 150px;
-      border-radius: 50%;
     }
 
     /* Table */
@@ -83,7 +78,7 @@
 <body>
   <div class="split left">
     <div class="centered title">
-      <h2>Try Hover/Click on Colors</h2>
+      <h2>Hover/Click on Colors</h2>
     </div>
     <div id="table_colors" class="centered content"></div>
   </div>
@@ -94,8 +89,8 @@
     </div>
 
     <div class="centered content">
-      <div id="hovers_dashboard" class="img"></div>
-      <div id="clicks_dashboard" class="img"></div>
+      <div id="hovers_dashboard"></div>
+      <div id="clicks_dashboard"></div>
     </div>
   </div>
 
@@ -188,8 +183,8 @@
           console.log(colorsAndAmounts);
 
           // set the dimensions and margins of the graph
-          var width = 450
-              height = 450
+          var width = 350
+              height = 350
               margin = 40
 
           // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -253,7 +248,7 @@
             .text(function(d){ return d.data.value })
             .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
             .style("text-anchor", "middle")
-            .style("font-size", 35)
+            .style("font-size", 30)
         }
       });
 
@@ -283,8 +278,8 @@
           console.log(colorsAndAmounts);
 
           // set the dimensions and margins of the graph
-          var width = 450
-              height = 450
+          var width = 350
+              height = 350
               margin = 40
 
           // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -348,7 +343,7 @@
             .text(function(d){ return d.data.value })
             .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
             .style("text-anchor", "middle")
-            .style("font-size", 35)
+            .style("font-size", 30)
         }
       });
 
