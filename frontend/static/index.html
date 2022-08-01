@@ -240,6 +240,7 @@
             .style("stroke-width", "5px")
             .style("opacity", 0.7)
 
+          // Adding numbers inside each piece of the pie chart
           svg
             .selectAll("whatever")
             .data(data_ready)
@@ -249,6 +250,12 @@
             .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
             .style("text-anchor", "middle")
             .style("font-size", 30)
+
+          // Adding "Hovers" title inside pie chart
+          svg.append("text")
+             .attr("text-anchor", "middle")
+             .style("font-size", 25)
+             .text("Hovers");
         }
       });
 
@@ -335,6 +342,7 @@
             .style("stroke-width", "5px")
             .style("opacity", 0.7)
 
+          // Adding numbers inside each piece of the pie chart
           svg
             .selectAll("whatever")
             .data(data_ready)
@@ -344,6 +352,12 @@
             .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
             .style("text-anchor", "middle")
             .style("font-size", 30)
+
+          // Adding "Hovers" title inside pie chart
+          svg.append("text")
+             .attr("text-anchor", "middle")
+             .style("font-size", 25)
+             .text("Clicks");
         }
       });
 
