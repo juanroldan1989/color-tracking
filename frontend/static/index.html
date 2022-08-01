@@ -94,14 +94,7 @@
     </div>
 
     <div class="centered content">
-      <!-- General Dashboard -->
-      <div id="general_dashboard" class="img"></div>
-
-      <!-- TODO -->
-      <!-- Colors Hovered On -->
-
-      <!-- TODO -->
-      <!-- Colors Clicked On -->
+      <div id="hovers_dashboard" class="img"></div>
       <div id="clicks_dashboard" class="img"></div>
     </div>
   </div>
@@ -171,7 +164,7 @@
   <!-- Graphs Generation -->
   <script type="text/javascript">
 
-    // General Dashboard
+    // Hovers Dashboard
     setInterval(function() {
       var colors = [];
       var colorsAndAmounts = {};
@@ -180,7 +173,7 @@
         type: "GET",
         dataType: "json",
         url: "http://localhost:3000/v1/action_colors",
-        data: {},
+        data: { action_name: "hover" },
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Token token=testing");
         },
@@ -203,10 +196,10 @@
           var radius = Math.min(width, height) / 2 - margin
 
           // remove old graph to allow new graph to be rendered
-          $("#general_dashboard").html("");
+          $("#hovers_dashboard").html("");
 
-          // append the svg object to the div called 'general_dashboard'
-          var svg = d3.select("#general_dashboard")
+          // append the svg object to the div called 'hovers_dashboard'
+          var svg = d3.select("#hovers_dashboard")
             .append("svg")
               .attr("width", width)
               .attr("height", height)
