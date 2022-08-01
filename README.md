@@ -1,5 +1,9 @@
 # Color Tracking App
 
+<div align="left">
+  <img width="800" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking-screenshot.png" />
+</div>
+
 ## Thoughts and Inspiration
 
 <div align="left">
