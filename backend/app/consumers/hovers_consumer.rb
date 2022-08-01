@@ -20,7 +20,3 @@ class HoversConsumer < ApplicationConsumer
   # def shutdown
   # end
 end
-
-# TODO:
-# SQLite3::BusyException: database is locked
-# this happens when trying to HOVER and CLICK several times
