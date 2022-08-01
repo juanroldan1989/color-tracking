@@ -101,6 +101,20 @@
   <!-- Events Generation -->
   <script type="text/javascript">
     $(document).ready(function() {
+
+      // Display "hover" effect on table cell colors
+      $("td")
+        .mouseenter(function() {
+          var color = $(this).attr("class");
+          var hoverColor = "dark" + color;
+          $(this).css("background-color", hoverColor);
+        })
+        .mouseleave(function() {
+          var color = $(this).attr("class");
+          $(this).css("background-color", color);
+        });
+
+      // Trigger "hover" event
       $("td").hover(function(){
         var color = this.className;
         console.log("Hovered on color: ", color);
@@ -115,6 +129,7 @@
         });
       });
 
+      // Trigger "click" event
       $("td").click(function(){
         var color = this.className;
         console.log("Clicked on color: ", color);
