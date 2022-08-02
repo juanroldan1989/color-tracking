@@ -6,7 +6,14 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 class KarafkaApp < Karafka::App
   setup do |config|
-    config.kafka = { 'bootstrap.servers': '127.0.0.1:9092' }
+
+    # Working with containers
+    # docker-compose.yml -> kafka -> KAFKA_ADVERTISED_HOST_NAME: kafka
+    config.kafka = { 'bootstrap.servers': 'kafka:9092' }
+
+    # Working without containers
+    # config.kafka = { 'bootstrap.servers': '127.0.0.1:9092' }
+
     config.client_id = 'example_app'
     config.concurrency = 5
     # Recreate consumers with each batch. This will allow Rails code reload to work in the
