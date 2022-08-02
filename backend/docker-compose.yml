@@ -50,14 +50,9 @@ services:
       - db
       - zookeeper
 
-  # TODO: color-tracking API works OK
-  #       -> needs manually running `bundle exec karafka server` inside `api` container
   api:
-    # use `image` for starting api without the need of refreshing for changes
-    # image: juanroldan1989/color-tracking-api
-
-    # use `build` for starting api and refreshing it when making changes
-    build: .
+    image: juanroldan1989/color-tracking-api
+    # build: .
     container_name: api
     networks:
       - "color-tracking-net"
@@ -69,6 +64,29 @@ services:
       - db
       - kafka
       - zookeeper
+    environment:
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      SECRET_KEY_BASE: 4aa41ef3d067551bed489ff4e4f3357886923e27ab83a37dd1ab26014b050d5f8e3fe6bdf26906ac04903d6466d7e452e6443d7c70a83537de254bbc4fa9a188
+
+  karafka-consumer:
+    image: juanroldan1989/color-tracking-api
+    # build: .
+    container_name: karafka-consumer
+    networks:
+      - "color-tracking-net"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+      - kafka
+      - zookeeper
+      - api
+    # https://github.com/karafka/karafka#tldr-1-minute-from-setup-to-publishing-and-consuming-messages
+    # Run Karafka server and see the consumption magic happen
+    command: bundle exec karafka server
     environment:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
