@@ -17,6 +17,12 @@ $ brew services stop/start kafka
 $ brew services stop/start zookeeper
 ```
 
+## Kafka Docker Images available
+
+- wurstmeister: https://github.com/wurstmeister/kafka-docker
+- bitnami: https://insertafter.com/en/blog/kafka_docker_compose.html - https://hub.docker.com/r/bitnami/kafka/
+- confluentinc: https://www.baeldung.com/ops/kafka-docker-setup
+
 ## Database implementation
 
 ### User
