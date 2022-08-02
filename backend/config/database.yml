@@ -17,21 +17,21 @@ default: &default
   encoding: utf-8
   username: juan
   password: '123456'
-  # host: db
+  host: db
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
   <<: *default
-  database: color_tracking_development
+  # database: color_tracking_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: color_tracking_test
+  # database: color_tracking_test
 
 production:
   <<: *default
-  database: color_tracking_production
+  # database: color_tracking_production

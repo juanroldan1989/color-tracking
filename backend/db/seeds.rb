@@ -13,7 +13,7 @@ puts "Done!"
 puts
 
 puts "Seeding testing API KEY"
-User.create(api_key: "testing") if Rails.env.development?
+User.create(api_key: "testing")
 puts "Done!"
 
 # TODO: add as many colors as possible
