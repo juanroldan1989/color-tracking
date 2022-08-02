@@ -46,6 +46,7 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_CREATE_TOPICS: "hover_on_colors:1:1,click_on_colors:1:1"
     depends_on:
       - db
       - zookeeper

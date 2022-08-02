@@ -28,8 +28,23 @@ For Docker Compose development:
 $ docker stop/start karafka-consumer
 ```
 
-Run Karafka server and see the consumption magic happen
+**The above also triggers topics creation (in case they don't exist yet)**
+
+- Run Karafka server and see the consumption magic happen
 https://github.com/karafka/karafka#tldr-1-minute-from-setup-to-publishing-and-consuming-messages
+
+## KAFKA_AUTO_CREATE_TOPICS_ENABLE = true
+
+- Environment variable pass to `wurstmeister/kafka` container.
+- Topics will be created **as and when they're first referenced** by the producer or consumer.
+
+## KAFKA_AUTO_CREATE_TOPICS_ENABLE = false
+
+Then we need to to pass to `wurstmeister/kafka` container:
+
+```ruby
+KAFKA_CREATE_TOPICS: "hover_on_colors:1:1,click_on_colors:1:1"
+```
 
 ## Kafka Docker Images available
 
