@@ -23,6 +23,10 @@ $ brew services stop/start zookeeper
 - bitnami: https://insertafter.com/en/blog/kafka_docker_compose.html - https://hub.docker.com/r/bitnami/kafka/
 - confluentinc: https://www.baeldung.com/ops/kafka-docker-setup
 
+## Kafka Useful Commands
+
+https://gist.github.com/kim-hyunjin/bde9d52445cc791bc06a109a249ad753
+
 ## Database implementation
 
 ### User

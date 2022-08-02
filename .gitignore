@@ -4,3 +4,4 @@ backend/log/*
 backend/log/development.log
 backend/tmp/development_secret.txt
 backend/tmp/restart.txt
+backend/tmp/pids/server.pid
