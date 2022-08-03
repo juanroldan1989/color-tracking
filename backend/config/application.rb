@@ -22,6 +22,7 @@ module Backend
     # TODO: validate this config when deploying to AWS
     config.middleware.insert_before 0, Rack::Cors do
       allow do
+        # origins 'http://example.com:80' / https://www.stackhawk.com/blog/rails-cors-guide/
         origins "*"
         resource "/v1/action_colors",
           headers: :any,
