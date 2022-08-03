@@ -10,6 +10,22 @@
   <img width="400" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking.jpeg" />
 </div>
 
+## Local Development
+
+Starting up:
+
+```ruby
+$ git clone git@github.com:juanroldan1989/color-tracking.git
+$ cd color-tracking
+$ docker-compouse up
+```
+
+Cleaning up:
+
+```ruby
+$ docker-compose down -v
+```
+
 ## Karafka troubleshooting
 
 For local development:
