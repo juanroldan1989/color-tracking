@@ -1,0 +1,100 @@
+version: "2"
+
+volumes:
+  db_data:
+
+services:
+  db:
+    image: postgres:9.6-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=juan
+      - POSTGRES_PASSWORD=123456
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: postgres
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: zookeeper
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    links:
+      - db
+      - zookeeper
+    environment:
+      HOSTNAME_COMMAND: wget -t3 -T2 -qO- http://169.254.169.254/latest/meta-data/local-ipv4
+
+      KAFKA_ADVERTISED_PORT: 9092
+      # in case port is dynamically asigned:
+      # disabled `KAFKA_ADVERTISED_PORT` and enable: PORT_COMMAND: "docker port $$(hostname) 9092/tcp | cut -d: -f2"
+
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "hover_on_colors:1:1,click_on_colors:1:1"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: kafka
+
+  # Rdkafka::RdkafkaError (Broker: Invalid replication factor (invalid_replication_factor)
+  api:
+    image: juanroldan1989/color-tracking-api
+    cpu_shares: 100
+    # mem_limit: 262144000 # disabled to avoid `Out of memory` error within ECS Instance
+    ports:
+      - "80:3000"
+    links:
+      - db
+      - kafka
+      - zookeeper
+    environment:
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      SECRET_KEY_BASE: 4aa41ef3d067551bed489ff4e4f3357886923e27ab83a37dd1ab26014b050d5f8e3fe6bdf26906ac04903d6466d7e452e6443d7c70a83537de254bbc4fa9a188
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: api
+
+  karafka-consumer:
+    image: juanroldan1989/color-tracking-api
+    cpu_shares: 100
+    # mem_limit: 262144000 # disabled to avoid `Out of memory` error within ECS Instance
+    ports:
+      - "81:3000"
+    links:
+      - db
+      - kafka
+      - zookeeper
+      - api
+    command: bundle exec karafka server
+    environment:
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      SECRET_KEY_BASE: 4aa41ef3d067551bed489ff4e4f3357886923e27ab83a37dd1ab26014b050d5f8e3fe6bdf26906ac04903d6466d7e452e6443d7c70a83537de254bbc4fa9a188
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: karafka-consumer
