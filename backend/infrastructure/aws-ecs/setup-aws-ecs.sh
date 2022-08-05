@@ -43,5 +43,5 @@ ecs-cli ps --cluster color-tracking
 # docker exec -it [container name] bash
 # tail -f log/production.log
 
-# Delete clouster resources
+# Delete cluster resources
 ecs-cli down --cluster colo-tracking --force

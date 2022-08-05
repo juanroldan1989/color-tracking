@@ -11,3 +11,7 @@ So, if your application has one container running Nginx, one running Unicorn, an
 The "service" configuration lets you specify how many "tasks" (a.k.a. copies of your app) should run, and how they're load balanced.
 
 E.g.: I want three copies of my app to run, with load balancing on port 80.
+
+## TODO
+
+TODO: Remove ECS keys from repository. Add steps indicating how to generate and include them in the repo for deployment.
