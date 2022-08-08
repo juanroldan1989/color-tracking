@@ -53,7 +53,16 @@ $ docker-compose down -v
 
 ## ECS
 
-Deployment instructions:
+1. Official steps for ECS CLI Configuration:
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
+
+2. Place both `ecs-cli.asc` and `public_key_ecs.txt` files inside `backend/infrastructure/aws-ecs` folder.
+
+3. Login into AWS Console -> EC2 -> Key pairs -> Create key pair
+
+4. Download `private-ecs-key.cer` and place it inside `backend/infrastructure/aws-ecs` folder
+
+5. Deployment instructions:
 
 ```ruby
 backend/infrastructure/aws-ecs/setup-aws-ecs.sh
@@ -81,7 +90,7 @@ $ ecs-cli compose up --cluster color-tracking --create-log-groups
 $ ecs-cli ps --cluster color-tracking
 ```
 
-- Cluster deletion and resources cleanup
+6. Cluster deletion and resources cleanup
 ```ruby
 $ ecs-cli down --cluster colo-tracking --force
 ```

@@ -1,6 +1,8 @@
 module V1
   class ActionColorsController < ApplicationController
 
+    # TODO: add websocket endpoint with this same response
+    #       for live data updates on frontend instead of polling every X seconds
     def index
       results = colors.map do |color|
         records = ActionColor.includes(:action).includes(:color).
@@ -26,7 +28,6 @@ module V1
     end
 
     def create
-      # Karafka.producer.produce_async(topic: "hover_on_colors", payload: { api_key: "testing", action_id: Action.first.id, color_id: Color.first.id }.to_json)
       Karafka.producer.produce_async(
         topic: topic,
         payload: {
