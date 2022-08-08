@@ -178,9 +178,9 @@ Download and install Inspec: https://www.chef.io/downloads/tools/inspec
 Source: https://joachim8675309.medium.com/docker-the-terraform-way-a7c16b5f59ed
 
 ```ruby
-$ cd backend/infrastructure/tests
+$ docker-compose up
 
-$ terraform apply
+$ cd backend/infrastructure/tests
 
 $ inspec exec validate_containers_state.rb
 ```
