@@ -15,6 +15,3 @@ puts
 puts "Seeding testing API KEY"
 User.create(api_key: "testing") unless User.find_by_api_key("testing").present?
 puts "Done!"
-
-# TODO: add as many colors as possible
-# TODO: allow frontend to fetch colors from API Endpoint

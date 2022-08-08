@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: when setting up docker-compose, try edenhill/kafkacat:latest
-
 require ::File.expand_path('../config/environment', __FILE__)
 
 class KarafkaApp < Karafka::App

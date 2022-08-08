@@ -22,6 +22,11 @@ Add Mobile view of how app looks like: https://github.com/gitpoint/git-point#int
 
 Contribute section like this: https://github.com/gofiber/fiber#-contribute
 
+API could store "coordenates":
+- Then "replay mouse movement" functionality can be built on top
+- Then "heatmap" generation functionality can be built on top
+- Then "live mouse movements" could be replicated in an Admin Dashboard having an endpoint reading from Kafka and sending live data via websockets
+
 # Thoughts and Inspiration
 
 <div align="left">

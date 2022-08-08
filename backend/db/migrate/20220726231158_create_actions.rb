@@ -6,6 +6,6 @@ class CreateActions < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :actions, :name
+    add_index :actions, :name, unique: true
   end
 end
