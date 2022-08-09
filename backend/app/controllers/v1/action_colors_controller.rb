@@ -1,31 +1,10 @@
 module V1
   class ActionColorsController < ApplicationController
+    include CableReady::Broadcaster
 
-    # TODO: add websocket endpoint with this same response
-    #       for live data updates on frontend instead of polling every X seconds
     # TODO: implement ElasticSearch for indexing data
     def index
-      results = colors.map do |color|
-        records = ActionColor.includes(:action).includes(:color).
-          by_api_key(@user.api_key).
-          by_color(color)
-
-        if index_params["action_name"].present?
-          records = records.by_action(index_params["action_name"])
-        end
-
-        record = records.last
-
-        next unless record.present?
-
-        {
-          "action" => record.action.name,
-          "color"  => color,
-          "amount" => records.maximum(:amount)
-        }
-      end
-
-      render json: { results: results.compact }
+      render json: { results: results }
     end
 
     def create
@@ -37,6 +16,12 @@ module V1
           color_id: color_id
         }.to_json
       )
+
+      # broadcast to client
+      # https://cableready.stimulusreflex.com/cableready-101
+      # (Does not work from inside Kafka Consumer)
+      cable_ready["live_dashboards"].console_log(message: { results: results })
+      cable_ready.broadcast
     end
 
     private
@@ -72,6 +57,28 @@ module V1
       when "click"
         "click_on_colors"
       end
+    end
+
+    def results
+      colors.map do |color|
+        records = ActionColor.includes(:action).includes(:color).
+          by_api_key(@user.api_key).
+          by_color(color)
+
+        if index_params["action_name"].present?
+          records = records.by_action(index_params["action_name"])
+        end
+
+        record = records.last
+
+        next unless record.present?
+
+        {
+          "action" => record.action.name,
+          "color"  => color,
+          "amount" => records.maximum(:amount)
+        }
+      end.compact
     end
   end
 end

@@ -67,6 +67,9 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     builder (3.2.4)
+    cable_ready (4.5.0)
+      rails (>= 5.2)
+      thread-local (>= 1.1.0)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.5.0)
@@ -182,6 +185,7 @@ GEM
     rspec-support (3.11.0)
     strscan (3.0.4)
     thor (1.2.1)
+    thread-local (1.1.0)
     timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -200,6 +204,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  cable_ready (~> 4.5.0)
   karafka (>= 2.0.0.alpha2)
   karafka-testing (>= 2.0.0.alpha3)
   pg (~> 1.4.2)

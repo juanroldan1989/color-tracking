@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ClicksConsumer < ApplicationConsumer
-
   # Consumes the messages by inserting all of them in one go into the DB
   def consume
     ActionColor.create!(messages.payloads)

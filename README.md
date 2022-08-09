@@ -198,3 +198,18 @@ $ cd backend/infrastructure/tests
 
 $ inspec exec validate_containers_state.rb
 ```
+
+# ActionCable links
+
+https://guides.rubyonrails.org/action_cable_overview.html
+
+https://www.npmjs.com/package/actioncable#npm-usage
+
+https://cableready.stimulusreflex.com/installation
+
+https://medium.com/@the.asantiagojr/how-to-setup-actioncable-with-a-rails-api-backend-1f1807c2d908
+
+Generate frontend Node project: https://nroulston.github.io/want_your_rails_api_to_be_multiplayer_lets_talk_actioncable - https://www.youtube.com/watch?v=1BfCnjr_Vjg&ab_channel=Fireship
+
+Websocket API in Javascript and AWS API Gateway
+https://www.youtube.com/watch?v=_hS2EWMY758&ab_channel=LambertLabs
