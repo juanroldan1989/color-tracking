@@ -3,6 +3,7 @@ module V1
 
     # TODO: add websocket endpoint with this same response
     #       for live data updates on frontend instead of polling every X seconds
+    # TODO: implement ElasticSearch for indexing data
     def index
       results = colors.map do |color|
         records = ActionColor.includes(:action).includes(:color).

@@ -68,7 +68,7 @@ services:
     environment:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
-      SECRET_KEY_BASE: 4aa41ef3d067551bed489ff4e4f3357886923e27ab83a37dd1ab26014b050d5f8e3fe6bdf26906ac04903d6466d7e452e6443d7c70a83537de254bbc4fa9a188
+      SECRET_KEY_BASE: "secret_key_base"
 
   karafka-consumer:
     image: juanroldan1989/color-tracking-api
@@ -85,10 +85,9 @@ services:
       - kafka
       - zookeeper
       - api
-    # https://github.com/karafka/karafka#tldr-1-minute-from-setup-to-publishing-and-consuming-messages
-    # Run Karafka server and see the consumption magic happen
     command: bundle exec karafka server
     environment:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
-      SECRET_KEY_BASE: 4aa41ef3d067551bed489ff4e4f3357886923e27ab83a37dd1ab26014b050d5f8e3fe6bdf26906ac04903d6466d7e452e6443d7c70a83537de254bbc4fa9a188
+      RUN_MIGRATIONS: "false"
+      SECRET_KEY_BASE: "secret_key_base"
