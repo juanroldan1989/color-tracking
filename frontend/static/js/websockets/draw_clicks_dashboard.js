@@ -1,12 +1,12 @@
 $(document).ready(function() {
   var cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
-  cable.subscriptions.create("HoversChannel", {
+  cable.subscriptions.create("ClicksChannel", {
     connected: function() {
-      console.log("You've subscribed to the Hovers Channel");
+      console.log("You've subscribed to the Clicks Channel");
     },
     disconnected: function() {
-      console.log("You've disconnected from the Hovers Channel");
+      console.log("You've disconnected from the Clicks Channel");
     },
     received: function (data) {
       console.log("Received data: ", data);
@@ -34,10 +34,10 @@ $(document).ready(function() {
       var radius = Math.min(width, height) / 2 - margin
 
       // remove old graph to allow new graph to be rendered
-      $("#hovers_dashboard").html("");
+      $("#clicks_dashboard").html("");
 
-      // append the svg object to the div called 'hovers_dashboard'
-      var svg = d3.select("#hovers_dashboard")
+      // append the svg object to the div called 'clicks_dashboard'
+      var svg = d3.select("#clicks_dashboard")
         .append("svg")
           .attr("width", width)
           .attr("height", height)
@@ -94,11 +94,11 @@ $(document).ready(function() {
         .style("text-anchor", "middle")
         .style("font-size", 30)
 
-      // Adding "Hovers" title inside pie chart
+      // Adding "Clicks" title inside pie chart
       svg.append("text")
          .attr("text-anchor", "middle")
          .style("font-size", 25)
-         .text("Hovers");
+         .text("Clicks");
     }
   });
 });

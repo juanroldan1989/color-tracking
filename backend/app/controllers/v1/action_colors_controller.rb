@@ -17,22 +17,26 @@ module V1
         }.to_json
       )
 
-      cable_ready["live_dashboards"].console_log(message: { results: results })
+      # TODO: try streming within after_create on model
+      stream = case action_title
+        when Action::CLICK
+          ClicksChannel::STREAM
+        when Action::HOVER
+          HoversChannel::STREAM
+        end
+
+      cable_ready[stream].console_log(message: { results: results })
       cable_ready.broadcast
     end
 
     private
-
-    def index_params
-      params.permit(:action_name)
-    end
 
     def create_params
       params.require(:action_color).permit(:action_name, :color_name)
     end
 
     def action_id
-      Action.find_by_name(create_params["action_name"]).id
+      Action.find_by_name(action_title).id
     rescue
       Action.first.id
     end
@@ -48,18 +52,22 @@ module V1
     end
 
     def topic
-      case create_params["action_name"]
-      when "hover"
-        "hover_on_colors"
-      when "click"
-        "click_on_colors"
+      case action_title
+        when Action::CLICK
+          "click_on_colors"
+        when Action::HOVER
+          "hover_on_colors"
       end
+    end
+
+    def action_title
+      params.dig("action_color", "action_name") || params.dig("action_name")
     end
 
     def results
       Dashboards.results(
         api_key: @user.api_key,
-        action_name: index_params["action_name"]
+        action_name: action_title
       )
     end
   end

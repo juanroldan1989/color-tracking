@@ -1,5 +1,5 @@
 puts "Seeding actions ..."
-actions = ["click", "hover"]
+actions = [Action::CLICK, Action::HOVER]
 actions.each { |action| Action.create(name: action) unless Action.find_by_name(action).present? }
 puts "Done!"
 
