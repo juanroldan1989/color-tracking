@@ -27,11 +27,35 @@ API could store "coordenates":
 - Then "heatmap" generation functionality can be built on top
 - Then "live mouse movements" could be replicated in an Admin Dashboard having an endpoint reading from Kafka and sending live data via websockets
 
+**Rising Wave**
+
+RisingWave makes it possible to do real-time ad performance analysis in a low code manner.
+
+https://www.risingwave.dev/docs/latest/perform-real-time-ad-performance-analysis/
+
+https://www.risingwave.dev/docs/latest/architecture/
+
+**UUID in frontend**
+
+https://github.com/uuidjs/uuid
+
+**AWS Diagrams with Hava.io**
+
+https://alanblackmore.medium.com/aws-diagram-architecture-afb50ea569a4?s=03
+
 # Thoughts and Inspiration
 
 <div align="left">
   <img width="400" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking.jpeg" />
 </div>
+
+# Docker Containers Diagram
+
+TODO
+
+# AWS Tasks Diagram
+
+TODO
 
 # Local Development
 
@@ -40,12 +64,19 @@ Starting up:
 ```ruby
 $ git clone git@github.com:juanroldan1989/color-tracking.git
 $ cd color-tracking
+$ cd backend
 $ docker-compose up
+```
+
+```ruby
+$ cd frontend
+$ open index.html
 ```
 
 Cleaning up:
 
 ```ruby
+$ cd backend
 $ docker-compose down -v
 ```
 
@@ -92,7 +123,7 @@ $ ecs-cli ps --cluster color-tracking
 
 6. Cluster deletion and resources cleanup
 ```ruby
-$ ecs-cli down --cluster colo-tracking --force
+$ ecs-cli down --cluster color-tracking --force
 ```
 
 ## Terraform
@@ -199,42 +230,72 @@ $ cd backend/infrastructure/tests
 $ inspec exec validate_containers_state.rb
 ```
 
-# Approaches When Refreshing Dashboards
+# Refreshing Dashboards
 
 ## Approach 1
 
-1. Click/Hover Event triggered in `frontend`
+1. `Click/Hover` event triggered in `frontend`
 2. Dashboards updated accordingly in `frontend`
-3. Request sent to `backend`
+3. Event sent to `backend`
 4. `ActionColor` record is created
 
-**Pros:** Amazing UX. 100% `real-time`
-**Cons:** If backend fails when persisting record (including `resiliency workflow`), data displayed might not match database records afterwards.
+**Pros:**
+- UX is amazing. 100% `real-time`
+
+**Cons:**
+- If record creation fails in backend (including `resiliency workflow`), dashboards won't match users actions after page reload.
+- UI updated for `1 client` with given API Key.
 
 ## Approach 2
 
-1. Click/Hover Event triggered in `frontend`
-2. Request sent to `backend`
+1. `Click/Hover` event triggered in `frontend`
+2. Event sent to `backend`
 3. `ActionColor` record is created
-4. Events info is sent back to `frontend` via `websockets` or
-5. Events info is fetched from `frontend` via `polling`
-6. Dashboards updated accordingly in `frontend`
+4. Dashboards data is sent back to `frontend` via `websockets`
+5. Dashboards updated accordingly in `frontend`
 
-**Pros:** Data displayed always matches records in database.
-**Cons:** UX is less than `real-time`
+**Pros:**
+- Data displayed always matches records in database, even after page reload.
+- UI updated for `all clients` with given API Key.
+
+**Cons:**
+- UX is less performant than `Approach 1`
+
+## Approach 3
+
+1. `Click/Hover` event triggered in `frontend`
+2. Event sent to `backend`
+3. `ActionColor` record is created
+4. Dashboards data is fetched from `frontend` via `polling` every X seconds
+5. Dashboards updated accordingly in `frontend`
+
+**Pros:**
+- Data displayed always matches records in database, even after page reload.
+- UI updated for `1 client` with given API Key after X seconds.
+
+**Cons:**
+- UX is less performant than `Approach 2`
 
 # Broadcasting Events from BE to FE
 
 ## Backend
 
-- Websockets implementation is using Rails's own ActionCable.
+Websockets implementation using Rails's own `ActionCable`.
 
-- `cable_ready` ruby gem is a good extension on ActionCable capabilities, providing `operations` to be broadcasted to the frontend:
+## Frontend
+
+Websockets implementation using `action_cable` Javascript library.
+
+## Cable Ready
+
+`cable_ready` ruby gem is a great extension on `ActionCable` capabilities
+
+Provides `operations` to be broadcasted to the frontend.
 
 https://cableready.stimulusreflex.com/#what-can-i-do-with-cableready
 https://cableready.stimulusreflex.com/cableready-everywhere
 
-Backend adjustments when working with `cable_ready`:
+`Backend` adjustments when working with `cable_ready`:
 
 ```ruby
 # Gemfile
@@ -263,7 +324,7 @@ cable_ready.broadcast
 ...
 ```
 
-Frontend adjustments when working with `cable_ready`:
+`Frontend` adjustments when working with `cable_ready`:
 
 ```ruby
 
@@ -276,10 +337,6 @@ var results = data.operations.consoleLog[0].message.results;
 
 ...
 ```
-
-## Frontend
-
-Websockets implementation using `action_cable` Javascript library
 
 # ActionCable Links
 

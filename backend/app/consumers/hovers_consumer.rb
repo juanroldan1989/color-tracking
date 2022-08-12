@@ -3,6 +3,8 @@
 # TODO: add resiliency workflow (e.g.: queues, DLQs, etc)
 #       so we increase tracking coverage of events (clicks & hovers)
 
+# https://faun.pub/aws-sns-dead-letter-queue-dlq-pattern-local-setup-272a206da3f
+
 class HoversConsumer < ApplicationConsumer
   # Consumes the messages by inserting all of them in one go into the DB
   def consume

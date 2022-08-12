@@ -53,5 +53,5 @@ $ ecs-cli ps --cluster color-tracking
 
 6. Cluster deletion and resources cleanup
 ```ruby
-$ ecs-cli down --cluster colo-tracking --force
+$ ecs-cli down --cluster color-tracking --force
 ```

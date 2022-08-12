@@ -47,14 +47,18 @@
   <!-- Events Generation -->
   <script src="js/events/clicks_and_hovers.js"></script>
 
-  <!-- Dashboard Generation -->
+  <!-- Dashboard Generation - Approach 1 -->
+  <!-- TODO: Frontend updating dashboards on each user's action -->
+  <!-- UI updated for 1 client with given API Key -->
+
+  <!-- Dashboard Generation - Approach 2 -->
   <!-- Backend sending data through WebSockets with ActionCable -->
   <!-- UI updated for all clients with given API Key -->
   <script src="js/websockets/draw_clicks_dashboard.js"></script>
   <script src="js/websockets/draw_hovers_dashboard.js"></script>
 
-  <!-- Dashboard Generation -->
-  <!-- Frontend polling every 1 second -->
+  <!-- Dashboard Generation - Approach 3 -->
+  <!-- Frontend polling every 1 second and updating dashboards -->
   <!-- UI updated for 1 client with given API Key -->
   <script src="js/polling/draw_clicks_dashboard.js"></script>
   <script src="js/polling/draw_hovers_dashboard.js"></script>

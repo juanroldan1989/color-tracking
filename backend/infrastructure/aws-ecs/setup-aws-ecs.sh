@@ -44,4 +44,4 @@ ecs-cli ps --cluster color-tracking
 # tail -f log/production.log
 
 # Delete cluster resources
-ecs-cli down --cluster colo-tracking --force
+ecs-cli down --cluster color-tracking --force
