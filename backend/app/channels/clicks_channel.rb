@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# TODO: associate stream with 1 API_KEY
+
 class ClicksChannel < ApplicationCable::Channel
   STREAM = "live_clicks_dashboard"
 

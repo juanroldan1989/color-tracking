@@ -227,9 +227,55 @@ $ inspec exec validate_containers_state.rb
 
 ## Backend
 
-Websockets implementation using `cable_ready` Ruby Gem
+- Websockets implementation is using Rails's own ActionCable.
 
-Reference: https://cableready.stimulusreflex.com/cableready-101
+- `cable_ready` ruby gem is a good extension on ActionCable capabilities, providing `operations` to be broadcasted to the frontend:
+
+https://cableready.stimulusreflex.com/#what-can-i-do-with-cableready
+https://cableready.stimulusreflex.com/cableready-everywhere
+
+Backend adjustments when working with `cable_ready`:
+
+```ruby
+# Gemfile
+
+...
+
+gem "cable_ready", "~> 4.5.0"
+
+...
+```
+
+```ruby
+# /v1/action_colors_controller.rb
+...
+
+stream = case action_title
+  when Action::CLICK
+    ClicksChannel::STREAM
+  when Action::HOVER
+    HoversChannel::STREAM
+  end
+
+cable_ready[stream].console_log(message: { results: results })
+cable_ready.broadcast
+
+...
+```
+
+Frontend adjustments when working with `cable_ready`:
+
+```ruby
+
+# js/websockets/draw_hovers_dashboard.js
+...
+
+console.log("Received data: ", data);
+
+var results = data.operations.consoleLog[0].message.results;
+
+...
+```
 
 ## Frontend
 

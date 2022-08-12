@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  // const socket = io("ws://localhost:3000/cable", {
+  // const socket = io("ws://localhost:3000/v1/cable", {
   //   reconnectionDelayMax: 10000,
   //   auth: {
   //     token: "testing",

@@ -13,7 +13,7 @@
             "confirmation": "confirm_subscription",
             "rejection": "reject_subscription"
           },
-          "default_mount_path": "/cable",
+          "default_mount_path": "/v1/cable",
           "protocols": ["actioncable-v1-json", "actioncable-unsupported"]
         },
         WebSocket: window.WebSocket,

@@ -1,8 +1,6 @@
 module V1
   class ActionColorsController < ApplicationController
-    include CableReady::Broadcaster
 
-    # TODO: implement ElasticSearch for indexing data
     def index
       render json: { results: results }
     end
@@ -17,16 +15,7 @@ module V1
         }.to_json
       )
 
-      # TODO: try streming within after_create on model
-      stream = case action_title
-        when Action::CLICK
-          ClicksChannel::STREAM
-        when Action::HOVER
-          HoversChannel::STREAM
-        end
-
-      cable_ready[stream].console_log(message: { results: results })
-      cable_ready.broadcast
+      ActionCable.server.broadcast stream, { results: results }
     end
 
     private
@@ -53,10 +42,10 @@ module V1
 
     def topic
       case action_title
-        when Action::CLICK
-          "click_on_colors"
-        when Action::HOVER
-          "hover_on_colors"
+      when Action::CLICK
+        "click_on_colors"
+      when Action::HOVER
+        "hover_on_colors"
       end
     end
 
@@ -69,6 +58,15 @@ module V1
         api_key: @user.api_key,
         action_name: action_title
       )
+    end
+
+    def stream
+      case action_title
+      when Action::CLICK
+        ClicksChannel::STREAM
+      when Action::HOVER
+        HoversChannel::STREAM
+      end
     end
   end
 end

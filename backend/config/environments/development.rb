@@ -54,7 +54,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Action Cable config
-  config.action_cable.url = "ws://localhost:3000/cable"
+  config.action_cable.url = "ws://localhost:3000/v1/cable"
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', 'null', nil]
 
   # Raises error for missing translations.

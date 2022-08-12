@@ -47,12 +47,16 @@
   <!-- Events Generation -->
   <script src="js/events/clicks_and_hovers.js"></script>
 
-  <!-- Dashboard Generation - WebSockets with ActionCable -->
+  <!-- Dashboard Generation -->
+  <!-- Backend sending data through WebSockets with ActionCable -->
+  <!-- UI updated for all clients with given API Key -->
   <script src="js/websockets/draw_clicks_dashboard.js"></script>
   <script src="js/websockets/draw_hovers_dashboard.js"></script>
 
-  <!-- Dashboard Generation - Frontend Polling every 1 second -->
-  <!-- <script src="js/polling/draw_hovers_dashboard.js"></script> -->
-  <!-- <script src="js/polling/draw_clicks_dashboard.js"></script> -->
+  <!-- Dashboard Generation -->
+  <!-- Frontend polling every 1 second -->
+  <!-- UI updated for 1 client with given API Key -->
+  <script src="js/polling/draw_clicks_dashboard.js"></script>
+  <script src="js/polling/draw_hovers_dashboard.js"></script>
 </body>
 </html>

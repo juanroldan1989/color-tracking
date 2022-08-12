@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+  var cable = ActionCable.createConsumer('ws://localhost:3000/v1/cable')
 
   cable.subscriptions.create("ClicksChannel", {
     connected: function() {
@@ -11,7 +11,7 @@ $(document).ready(function() {
     received: function (data) {
       console.log("Received data: ", data);
 
-      var results = data.operations.consoleLog[0].message.results;
+      var results = data.results;
       console.log("Received results: ", results);
 
       var colors = [];
