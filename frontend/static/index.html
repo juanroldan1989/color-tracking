@@ -3,83 +3,20 @@
 <head>
   <title>Color Tracking App</title>
 
-  <style type="text/css">
-    /* Split the screen in half */
-    .split {
-      height: 100%;
-      width: 50%;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      overflow-x: hidden;
-      padding-top: 20px;
-    }
-
-    /* Control the left side */
-    .left {
-      left: 0;
-      background-color: white;
-    }
-
-    /* Control the right side */
-    .right {
-      right: 0;
-      background-color: gray;
-    }
-
-    /* If you want the content centered horizontally and vertically */
-    .centered {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
-
-    .centered.title {
-      top: 5%;
-      font-size: 1.5em;
-    }
-
-    .centered.content {
-      top: 50%;
-    }
-
-    /* Table */
-    table {
-      width: 500px;
-      height: 600px;
-    }
-
-    /* Colors */
-    .red {
-      background-color: red;
-    }
-
-    .blue {
-      background-color: blue;
-    }
-
-    .yellow {
-      background-color: yellow;
-    }
-
-    .green {
-      background-color: green;
-    }
-  </style>
+  <!-- Stylesheets -->
+  <link href="./css/main.css" rel="stylesheet" type="text/css">
 
   <!-- Load jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <!-- Load d3.js -->
+  <!-- Load D3 Library -->
   <script src="https://d3js.org/d3.v4.js"></script>
 
-  <!-- SocketIO -->
-  <!-- <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script> -->
+  <!-- Load Action Cable -->
+  <script src="js/websockets/action_cable.js"></script>
 
-  <!-- Action Cable -->
-  <script src="websockets/action_cable.js"></script>
+  <!-- Load SocketIO - Alternative to Action Cable -->
+  <!-- <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script> -->
 </head>
 <body>
   <div class="split left">
@@ -105,42 +42,17 @@
     <a href="https://juanroldan.com.ar">juanroldan.com.ar</a>
   </footer>
 
-  <!-- Approaches when refreshing Dashboards -->
-
-  <!-- Approach 1 -->
-  <!--
-    1. Event triggered in frontend
-    2. Dashboards updated accordingly in frontend
-    3. Request sent to backend
-    4. `ActionColor` record is created
-
-    Pros: Amazing UX. 100% real-time
-    Cons: If backend fails when persisting record (including `resiliency workflow`),
-          data displayed might not match database records afterwards
-  -->
-
-  <!-- Approach 2 -->
-  <!--
-    1. Event triggered in frontend
-    2. Request sent to backend
-    3. `ActionColor` record is created
-    4. Dashboards updated accordingly in frontend (via Polling or WebSockets)
-
-    Pros: Data displayed always matches records in database.
-    Cons: UX is less than real-time
-  -->
-
   <!-- Colors Table Generation -->
-  <script src="draw_colors_table.js"></script>
+  <script src="js/draw_colors_table.js"></script>
 
   <!-- Events Generation -->
-  <script src="events/clicks_and_hovers.js"></script>
+  <script src="js/events/clicks_and_hovers.js"></script>
 
   <!-- Dashboard Generation - WebSockets with ActionCable -->
-  <!-- <script src="websockets/draw_hovers_dashboard.js"></script> -->
+  <!-- <script src="js/websockets/draw_hovers_dashboard.js"></script> -->
 
-  <!-- Dashboard Generation - FE Polling every 1 second -->
-  <script src="polling/draw_hovers_dashboard.js"></script>
-  <script src="polling/draw_clicks_dashboard.js"></script>
+  <!-- Dashboard Generation - Frontend Polling every 1 second -->
+  <script src="js/polling/draw_hovers_dashboard.js"></script>
+  <script src="js/polling/draw_clicks_dashboard.js"></script>
 </body>
 </html>

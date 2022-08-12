@@ -199,7 +199,43 @@ $ cd backend/infrastructure/tests
 $ inspec exec validate_containers_state.rb
 ```
 
-# ActionCable links
+# Approaches When Refreshing Dashboards
+
+## Approach 1
+
+1. Click/Hover Event triggered in `frontend`
+2. Dashboards updated accordingly in `frontend`
+3. Request sent to `backend`
+4. `ActionColor` record is created
+
+**Pros:** Amazing UX. 100% `real-time`
+**Cons:** If backend fails when persisting record (including `resiliency workflow`), data displayed might not match database records afterwards.
+
+## Approach 2
+
+1. Click/Hover Event triggered in `frontend`
+2. Request sent to `backend`
+3. `ActionColor` record is created
+4. Events info is sent back to `frontend` via `websockets` or
+5. Events info is fetched from `frontend` via `polling`
+6. Dashboards updated accordingly in `frontend`
+
+**Pros:** Data displayed always matches records in database.
+**Cons:** UX is less than `real-time`
+
+# Broadcasting Events from BE to FE
+
+## Backend
+
+Websockets implementation using `cable_ready` Ruby Gem
+
+Reference: https://cableready.stimulusreflex.com/cableready-101
+
+## Frontend
+
+Websockets implementation using `action_cable` Javascript library
+
+# ActionCable Links
 
 https://guides.rubyonrails.org/action_cable_overview.html
 

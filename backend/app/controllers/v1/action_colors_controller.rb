@@ -17,9 +17,6 @@ module V1
         }.to_json
       )
 
-      # broadcast to client
-      # https://cableready.stimulusreflex.com/cableready-101
-      # (Does not work from inside Kafka Consumer)
       cable_ready["live_dashboards"].console_log(message: { results: results })
       cable_ready.broadcast
     end
