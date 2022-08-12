@@ -129,6 +129,31 @@
   </script>
   <!-- Colors Table Generation -->
 
+  <!-- Approaches when refreshing Dashboards -->
+
+  <!-- Approach 1 -->
+  <!--
+    1. Event triggered in frontend
+    2. Dashboards updated accordingly
+    3. Request sent to backend
+    4. `ActionColor` record is created
+
+    Pros: Amazing UX. 100% real-time
+    Cons: If backend fails when persisting record,
+          data displayed might not match database records afterwards
+  -->
+
+  <!-- Approach 2 -->
+  <!--
+    1. Event triggered in frontend
+    2. Request sent to backend
+    3. `ActionColor` record is created
+    4. Dashboards updated accordingly (via Polling or WebSockets)
+
+    Pros: Data displayed always matches records in database.
+    Cons: UX is less than real-time
+  -->
+
   <!-- Events Generation -->
   <script type="text/javascript">
     $(document).ready(function() {
@@ -482,7 +507,7 @@
             .style("text-anchor", "middle")
             .style("font-size", 30)
 
-          // Adding "Hovers" title inside pie chart
+          // Adding "Clicks" title inside pie chart
           svg.append("text")
              .attr("text-anchor", "middle")
              .style("font-size", 25)
@@ -495,7 +520,7 @@
   <!-- Graphs Generation (Client Polling every 1 second) -->
 
   <!-- WebSockets with SocketIO -->
-<!--   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     const socket = io("ws://localhost:3000/cable", {
       reconnectionDelayMax: 10000,
       auth: {
