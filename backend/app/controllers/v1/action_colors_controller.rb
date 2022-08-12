@@ -47,7 +47,7 @@ module V1
     end
 
     def colors
-      @colors ||= Color.select(:name).pluck(:name).sort
+      @colors ||= Colors.list
     end
 
     def topic
@@ -60,25 +60,10 @@ module V1
     end
 
     def results
-      colors.map do |color|
-        records = ActionColor.includes(:action).includes(:color).
-          by_api_key(@user.api_key).
-          by_color(color)
-
-        if index_params["action_name"].present?
-          records = records.by_action(index_params["action_name"])
-        end
-
-        record = records.last
-
-        next unless record.present?
-
-        {
-          "action" => record.action.name,
-          "color"  => color,
-          "amount" => records.maximum(:amount)
-        }
-      end.compact
+      Dashboards.results(
+        api_key: @user.api_key,
+        action_name: index_params["action_name"]
+      )
     end
   end
 end

@@ -105,6 +105,30 @@
     <a href="https://juanroldan.com.ar">juanroldan.com.ar</a>
   </footer>
 
+  <!-- Colors Table Generation -->
+  <script type="text/javascript">
+    var rows = 10;
+    var columns = 10;
+    var table = $("<table>");
+
+    for (var i = 0; i < columns; i++) {
+      table.append("<tr>");
+
+      for (var j = 0; j < rows; j++) {
+        var colors = ["blue", "green", "red", "yellow"];
+        var random = Math.floor(Math.random() * colors.length);
+        table.append("<td class='" + colors[random] + "'></td>");
+      };
+
+      table.append("</tr>");
+    };
+
+    table.append("</table>");
+
+    $("#table_colors").append(table);
+  </script>
+  <!-- Colors Table Generation -->
+
   <!-- Events Generation -->
   <script type="text/javascript">
     $(document).ready(function() {
@@ -153,30 +177,6 @@
     });
   </script>
   <!-- Events Generation -->
-
-  <!-- Colors Table Generation -->
-  <script type="text/javascript">
-    var rows = 10;
-    var columns = 10;
-    var table = $("<table>");
-
-    for (var i = 0; i < columns; i++) {
-      table.append("<tr>");
-
-      for (var j = 0; j < rows; j++) {
-        var colors = ["blue", "green", "red", "yellow"];
-        var random = Math.floor(Math.random() * colors.length);
-        table.append("<td class='" + colors[random] + "'></td>");
-      };
-
-      table.append("</tr>");
-    };
-
-    table.append("</table>");
-
-    $("#table_colors").append(table);
-  </script>
-  <!-- Colors Table Generation -->
 
   <!-- WebSockets with ActionCable -->
   <script type="text/javascript">
