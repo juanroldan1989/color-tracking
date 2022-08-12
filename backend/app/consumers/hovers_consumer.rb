@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class HoversConsumer < ApplicationConsumer
+# TODO: add resiliency workflow (e.g.: queues, DLQs, etc)
+#       so we increase tracking coverage of events (clicks & hovers)
 
+class HoversConsumer < ApplicationConsumer
   # Consumes the messages by inserting all of them in one go into the DB
   def consume
     ActionColor.create!(messages.payloads)
