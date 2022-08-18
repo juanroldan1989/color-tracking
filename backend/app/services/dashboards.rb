@@ -1,5 +1,5 @@
 class Dashboards
-  # TODO: implement ElasticSearch for indexing data
+  # TODO: implement with Rising Wave
   def self.results(api_key:, action_name: nil)
     Colors.list.map do |color|
       records = ActionColor.includes(:action).includes(:color).

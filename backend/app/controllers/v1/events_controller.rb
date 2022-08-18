@@ -1,5 +1,5 @@
 module V1
-  class ActionColorsController < ApplicationController
+  class EventsController < ApplicationController
 
     def index
       render json: { results: results }

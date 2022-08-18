@@ -7,7 +7,7 @@ $(document).ready(function() {
     $.ajax({
       type: "GET",
       dataType: "json",
-      url: "http://localhost:3000/v1/action_colors",
+      url: "http://localhost:3000/v1/events",
       data: { action_name: "hover" },
       beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization", "Token token=testing");

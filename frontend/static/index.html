@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Color Tracking App</title>
+  <title>Events Tracking Platform</title>
 
   <!-- Stylesheets -->
   <link href="./css/main.css" rel="stylesheet" type="text/css">
@@ -21,11 +21,15 @@
 <body>
   <div class="split left">
     <div class="centered title">
+      <!-- TODO: use better fonts -->
       <h2>Hover/Click on Colors</h2>
     </div>
     <div id="table_colors" class="centered content"></div>
   </div>
 
+  <!-- TODO: Apply responsive styles for 2 columns -->
+  <!-- table smaller for smaller devices -->
+  <!-- Graphs smaller for smaller devices -->
   <div class="split right">
     <div class="centered title">
       <h2>Live Results</h2>
@@ -37,6 +41,7 @@
     </div>
   </div>
 
+  <!-- TODO: improve footer UI -->
   <footer>
     <a href="https://juanroldan.com.ar">juanroldan.com.ar</a>
   </footer>
@@ -48,11 +53,13 @@
   <script src="js/events/clicks_and_hovers.js"></script>
 
   <!-- Dashboard Generation - Approach 1 -->
-  <!-- TODO: Frontend updating dashboards on each user's action -->
+  <!-- TODO: Frontend updating dashboards on each user's click/hover action -->
   <!-- UI updated for 1 client with given API Key -->
 
   <!-- Dashboard Generation - Approach 2 -->
-  <!-- Backend sending data through WebSockets with ActionCable -->
+  <!-- Frontend sending events into Backend -->
+  <!-- Event persisted in DB -->
+  <!-- Backend sending results back through WebSockets -->
   <!-- UI updated for all clients with given API Key -->
   <script src="js/websockets/draw_clicks_dashboard.js"></script>
   <script src="js/websockets/draw_hovers_dashboard.js"></script>

@@ -9,6 +9,9 @@
   <img src="https://img.shields.io/github/issues-raw/juanroldan1989/color-tracking.svg?style=flat-square&logo=github&logoColor=white" alt="GitHub issues">
   <a href="https://github.com/juanroldan1989/color-tracking/pulls">
   <img src="https://img.shields.io/github/issues-pr-raw/juanroldan1989/color-tracking.svg?style=flat-square&logo=github&logoColor=white" alt="GitHub pull requests">
+  <a href="https://github.com/juanroldan1989/color-tracking/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg">
+  </a>
   <a href="https://twitter.com/intent/tweet?text=Hey%20I've%20just%20discovered%20this%20cool%20app%20on%20Github%20by%20@JhonnyDaNiro%20-%20Color%20Tracking%20Live%20Events%20With%20Dashboards&url=https://github.com/juanroldan1989/color-tracking/&via=Github">
   <img src="https://img.shields.io/twitter/url/https/github.com/juanroldan1989/color-tracking.svg?style=flat-square&logo=twitter" alt="GitHub tweet">
 </p>
@@ -22,7 +25,7 @@
   <a href="#frontend">Frontend</a> •
   <a href="#backend">Backend</a> •
   <a href="#wiki">Wiki</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#contribute">Contribute</a>
 </p>
 
 # Demo
@@ -33,38 +36,91 @@
 
 # Diagrams
 
-## Docker
+## ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 TODO
 
-## AWS ECS
+## ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 TODO
 
 # Development
 
-Starting up:
+## ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+Relevant folder: `backend`
 
 ```ruby
 $ git clone git@github.com:juanroldan1989/color-tracking.git
 $ cd color-tracking
 $ cd backend
+
 $ docker-compose up
+
+# cleaning up
+$ docker-compose down -v
 ```
+
+Open static `frontend` page:
 
 ```ruby
 $ cd frontend
 $ open index.html
 ```
 
-Cleaning up:
+## ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+
+Relevant folder: `/backend/infrastructure/terraform`
+
+1. Enable `Docker Local Development` section in `main.tf`
+
+2. Run commands:
 
 ```ruby
-$ cd backend
-$ docker-compose down -v
+$ terraform init
+
+$ terraform plan
+
+$ terraform apply
+```
+
+**Application is ready**
+
+Open static `frontend` page:
+
+```ruby
+$ cd frontend
+$ open index.html
+```
+
+To destroy all local containers managed by your Terraform configuration:
+
+```ruby
+$ terraform destroy
 ```
 
 # Testing
+
+## Backend
+
+API tests written with RSpec
+
+```ruby
+$ cd backend
+$ rspec spec
+```
+
+## Frontend
+
+Frontend work has been **purposely** implemented using standalone libraries:
+
+- jQuery (Easy DOM Handling)
+- D3 (Graphs)
+- Action Cable (Websockets)
+
+This way anyone can use their framework of choice to implement a `frontend` application that interacts with the `backend` and write `frontend` tests as well.
+
+## Docker Containers
 
 Automated Verification achieved through `Chef InSpec`
 
@@ -74,7 +130,13 @@ Download and install Inspec: https://www.chef.io/downloads/tools/inspec
 
 Source: https://joachim8675309.medium.com/docker-the-terraform-way-a7c16b5f59ed
 
+## CI/CD Integration
+
+TODO: Provide Github Actions setup for triggering all frontend/backend and containers tests, THEN deploy.
+
 ```ruby
+$ cd backend
+
 $ docker-compose up
 
 $ cd backend/infrastructure/tests
@@ -84,7 +146,7 @@ $ inspec exec validate_containers_state.rb
 
 # Deployment
 
-## AWS ECS
+## ![AWS ECS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 1. Official steps for ECS CLI Configuration:
 https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
@@ -128,9 +190,44 @@ $ ecs-cli ps --cluster color-tracking
 $ ecs-cli down --cluster color-tracking --force
 ```
 
-## Terraform
+## ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
-- TODO
+Relevant folder: `/backend/infrastructure/terraform`
+
+1. Enable `AWS DEPLOYMENT` section in `main.tf`
+
+2. Run commands:
+
+```ruby
+$ terraform init
+
+# Observe all resources to be added
+$ terraform plan
+
+# Build & Launch infrastructure required
+$ terraform apply
+```
+
+**Application is ready**
+
+Replace `http://localhost:3000` instances inside `frontend/static/index.html` file with `Public DNS` hostname:
+
+1. Check AWS ECS console: https://console.aws.amazon.com/ecs/home#/clusters
+
+2. Get `Public DNS` value provided within `ECS Cluster` -> `Container Instance` -> `Public DNS`
+
+3. Open static `frontend` page:
+
+```ruby
+$ cd frontend
+$ open index.html
+```
+
+To destroy all remote objects managed by your Terraform configuration:
+
+```ruby
+$ terraform destroy
+```
 
 # Frontend
 
@@ -142,7 +239,7 @@ Frontend work has been **purposely** implemented using standalone libraries:
 
 This way anyone can use their framework of choice to implement a `frontend` application that interacts with the `backend`
 
-## Dashboards updates achieved by 3 approaches
+## Dashboards Updates - 3 Approaches
 
 ### Approach 1
 
@@ -155,8 +252,11 @@ This way anyone can use their framework of choice to implement a `frontend` appl
 - UX is amazing. 100% `real-time`
 
 **Cons:**
+- Lots of business logic in the frontend.
 - If record creation fails in backend (including `resiliency workflow`), dashboards won't match users actions after page reload.
 - UI updated for `1 client` with given API Key.
+
+:x: This approach hasn't been implemented. It's part of the **Improvements** section.
 
 ### Approach 2
 
@@ -167,11 +267,14 @@ This way anyone can use their framework of choice to implement a `frontend` appl
 5. Dashboards updated accordingly in `frontend`
 
 **Pros:**
+- Frontend business logic reduced to a minimum.
 - Data displayed always matches records in database, even after page reload.
 - UI updated for `all clients` with given API Key.
 
 **Cons:**
 - UX is less performant than `Approach 1`
+
+:white_check_mark: This approach has been implemented.
 
 ### Approach 3
 
@@ -182,21 +285,25 @@ This way anyone can use their framework of choice to implement a `frontend` appl
 5. Dashboards updated accordingly in `frontend`
 
 **Pros:**
+- Frontend business logic reduced to a minimum.
 - Data displayed always matches records in database, even after page reload.
 - UI updated for `1 client` with given API Key after X seconds.
 
 **Cons:**
 - UX is less performant than `Approach 2`
+- Backend API to be closely followed for throtlling issues given the amount of extra requests (polling) sent out.
+
+:white_check_mark: This approach has been implemented.
 
 # Backend
 
-Broadcasting Events from BE to FE
+Broadcasting Events from `backend` to `frontend`
 
-- Websockets implementation in the backend achieved through Rails's own `ActionCable`
+- Websockets implementation in the `backend` achieved through Rails's own `ActionCable`
 
-- Websockets implementation in the frontend achieved through `action_cable` Javascript library.
+- Websockets implementation in the `frontend` achieved through `action_cable` Javascript library.
 
-## Cable Ready
+## Cable Ready (Optional)
 
 `cable_ready` ruby gem is a great extension on `ActionCable` capabilities
 
@@ -218,15 +325,8 @@ gem "cable_ready", "~> 4.5.0"
 ```
 
 ```ruby
-# /v1/action_colors_controller.rb
+# /v1/events_controller.rb
 ...
-
-stream = case action_title
-  when Action::CLICK
-    ClicksChannel::STREAM
-  when Action::HOVER
-    HoversChannel::STREAM
-  end
 
 cable_ready[stream].console_log(message: { results: results })
 cable_ready.broadcast
@@ -252,19 +352,47 @@ var results = data.operations.consoleLog[0].message.results;
 
 Do you **need some help**? Check the _articles_ from the [wiki](https://github.com/juanroldan1989/color-tracking/wiki/).
 
-# Contributing
+# Contribute
 
-Got **something interesting** you'd like to **share**? Please feel free to [Open a Pull Request](https://github.com/juanroldan1989/color-tracking/pulls)
+Got **something interesting** you'd like to **add or change**? Please feel free to [Open a Pull Request](https://github.com/juanroldan1989/color-tracking/pulls)
+
+If you want to say **thank you** and/or support the active development of `Color Tracking API`:
+
+1. Add a [GitHub Star](https://github.com/juanroldan1989/color-tracking/stargazers) to the project.
+2. Tweet about the project [on your Twitter](https://twitter.com/intent/tweet?text=Hey%20I've%20just%20discovered%20this%20cool%20app%20on%20Github%20by%20@JhonnyDaNiro%20-%20Color%20Tracking%20Live%20Events%20With%20Dashboards&url=https://github.com/juanroldan1989/color-tracking/&via=Github).
+3. Write a review or tutorial on [Medium](https://medium.com), [Dev.to](https://dev.to) or personal blog.
 
 --------
 
 # To be added inside Wiki
 
-# Inspiration
+# Inception
 
 <div align="left">
   <img width="400" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking.jpeg" />
 </div>
+
+# Improvements
+
+# Dashboards updates achieved by 3 approaches
+
+## Approach 1
+
+1. `Click/Hover` event triggered in `frontend`
+2. Dashboards updated accordingly in `frontend`
+3. Event sent to `backend`
+4. `ActionColor` record is created
+
+**Pros:**
+- UX is amazing. 100% `real-time`
+
+**Cons:**
+- Lots of business logic in the frontend.
+- If record creation fails in backend (including `resiliency workflow`), dashboards won't match users actions after page reload.
+- UI updated for `1 client` with given API Key.
+
+## Approach 2 (implemented)
+## Approach 3 (implemented)
 
 # Kafka & Libraries
 
@@ -369,23 +497,13 @@ https://www.youtube.com/watch?v=_hS2EWMY758&ab_channel=LambertLabs
 
 # TODO
 
-Add Logo structure from: https://github.com/thelounge/thelounge#readme
-
-Add Table of contents https://github.com/Ileriayo/markdown-badges
-
-Add badges from https://github.com/Ileriayo/markdown-badges
-
-Twitter link from: https://github.com/ArmynC/ArminC-AutoExec/#readme
-
 Video walkthrough like this: https://github.com/ajeetdsouza/zoxide#readme - https://github.com/create-go-app/cli#readme
-
-Say Thanks link like this: https://github.com/amitmerchant1990/electron-markdownify#readme
 
 Add Mobile view of how app looks like: https://github.com/gitpoint/git-point#introduction
 
-Contribute section like this: https://github.com/gofiber/fiber#-contribute
+Develop another API that stores "coordenates":
 
-API could store "coordenates":
+- "Color History Tracking API"
 - Then "replay mouse movement" functionality can be built on top
 - Then "heatmap" generation functionality can be built on top
 - Then "live mouse movements" could be replicated in an Admin Dashboard having an endpoint reading from Kafka and sending live data via websockets

@@ -8,6 +8,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins "*"
-    resource "/v1/action_colors", headers: :any, methods: [:get, :post]
+    resource "/v1/events", headers: :any, methods: [:get, :post]
   end
 end

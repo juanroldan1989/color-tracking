@@ -20,11 +20,12 @@ module Backend
     # config.eager_load_paths << Rails.root.join("extras")
 
     # TODO: validate this config when deploying to AWS
+    # TODO: validate if the `cors.rb` file is needed
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         # origins 'http://example.com:80' / https://www.stackhawk.com/blog/rails-cors-guide/
         origins "*"
-        resource "/v1/action_colors",
+        resource "/v1/events",
           headers: :any,
           methods: [:get, :post]
           # if: proc { |env| env["HTTP_HOST"] == "api.example.com" }
