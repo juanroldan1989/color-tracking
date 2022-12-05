@@ -34,6 +34,47 @@
   <img width="800" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking-screenshot.png" />
 </div>
 
+# The Future is processig DATA in REAL TIME or IN BATCHES (Asynchronously)
+
+There are different ways of working based on User Experience and Expectations:
+
+### Best UX (most expensive)
+
+1. User sends data by clicking/hovering on colors.
+
+2. Dashboards updated in real-time based on user actions by using **frontend business logic.**
+
+3. DATA is **processed and stored in real-time** (more expensive)
+
+4. This means:
+- if user ever **refreshes** the page
+- Backend API provides **data up to date**
+- and returns **accurate data**
+- and dashboards will still display **accurate data.**
+
+TODO: develop **frontend bussiness logic** to refresh dashboards in real time based on click/hover user events.
+
+TODO: add another backend implementation using Lambda functions that scale automatically with spikes in requests and store data in dynamoDB tables - https://docs.aws.amazon.com/lambda/latest/operatorguide/scaling-concurrency.html
+
+### Second Best UX (less most expensive)
+
+1. User sends data by clicking/hovering on colors.
+
+2. Dashboards updated in real-time based on user actions by using **frontend business logic.**
+
+3. DATA is **processed and stored in batches** (less expensive)
+
+4. This means:
+- if user ever **refreshes** the page
+- Backend API provides **data not so up to date**
+- and returns **not so accurate data**
+- and dashboards might display **not so accurate data**
+
+5. BONUS - This situation can be compensated by:
+- using **frontend streaming bussiness logic** (current implementation)
+- to keep dashboards **as much up to date as possible**
+- as data sent is processed in the backend
+
 # Diagrams
 
 ## ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -117,6 +158,25 @@ Frontend work has been **purposely** implemented using standalone libraries:
 - jQuery (Easy DOM Handling)
 - D3 (Graphs)
 - Action Cable (Websockets)
+
+```ruby
+── frontend
+    └── static
+        ├── css
+        │   └── main.css
+        ├── index.html
+        └── js
+            ├── draw_colors_table.js
+            ├── events
+            │   └── clicks_and_hovers.js
+            ├── polling
+            │   ├── draw_clicks_dashboard.js
+            │   └── draw_hovers_dashboard.js
+            └── websockets
+                ├── action_cable.js
+                ├── draw_clicks_dashboard.js
+                └── draw_hovers_dashboard.js
+```
 
 This way anyone can use their framework of choice to implement a `frontend` application that interacts with the `backend` and write `frontend` tests as well.
 
@@ -496,6 +556,8 @@ https://www.youtube.com/watch?v=_hS2EWMY758&ab_channel=LambertLabs
 -------------
 
 # TODO
+
+Review Grafana Websocket plugin: https://grafana.com/blog/2022/04/05/how-to-use-websockets-to-visualize-real-time-iot-data-in-grafana
 
 Video walkthrough like this: https://github.com/ajeetdsouza/zoxide#readme - https://github.com/create-go-app/cli#readme
 
