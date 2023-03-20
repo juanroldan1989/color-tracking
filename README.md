@@ -145,15 +145,108 @@ This way anyone can use their framework of choice to implement a `frontend` appl
 
 Automated Verification achieved through `Chef InSpec`
 
-Chef InSpec is an infrastructure security and compliance testing framework with a human- and machine-readable language for comparing actual versus desired system state.
+`Chef InSpec` is an infrastructure security and compliance testing framework with a human and machine-readable language for comparing **actual versus desired system state.**
 
 Download and install Inspec: https://www.chef.io/downloads/tools/inspec
 
 Source: https://joachim8675309.medium.com/docker-the-terraform-way-a7c16b5f59ed
 
-## CI/CD Integration
+Tests for project present in [validate_containers_state.rb](https://github.com/juanroldan1989/color-tracking/blob/main/backend/infrastructure/tests/validate_containers_state.rb)
 
-TODO: Provide Github Actions setup for triggering all frontend/backend and containers tests, THEN deploy.
+```ruby
+PORT_DB = attribute("port", value: "5432", description: "DB port")
+PORT_ZOO = attribute("port", value: "2181", description: "ZOOKEEPER port")
+PORT_KAFKA = attribute("port", value: "9092", description: "KAFKA port")
+PORT_API = attribute("port", value: "3000", description: "API port")
+PORT_KARAFKA = attribute("port", value: "3001", description: "KARAFKA port")
+
+control "db-container" do
+  impact 1.0
+  title "DB Container"
+  desc "DB container should be running"
+
+  describe docker_container "db" do
+    it { should exist }
+    it { should be_running }
+    its("image") { should eq "postgres:9.6-alpine" }
+    its("ports") { should eq "0.0.0.0:#{PORT_DB}->#{PORT_DB}/tcp" }
+  end
+
+  describe json({ command: "docker container inspect db" }) do
+    its([0, "HostConfig", "NetworkMode"]) { should include "color-tracking-net" }
+  end
+end
+
+control "zoopkeeper-container" do
+  impact 1.0
+  title "Zookeeper Container"
+  desc "Zookeeper container should be running"
+
+  describe docker_container "zookeeper" do
+    it { should exist }
+    it { should be_running }
+    its("image") { should eq "wurstmeister/zookeeper" }
+    its("ports") { should eq "22/tcp, 2888/tcp, 3888/tcp, 0.0.0.0:#{PORT_ZOO}->#{PORT_ZOO}/tcp" }
+  end
+
+  describe json({ command: "docker container inspect zookeeper" }) do
+    its([0, "HostConfig", "NetworkMode"]) { should include "color-tracking-net" }
+  end
+end
+
+control "kafka-container" do
+  impact 1.0
+  title "Kafka Container"
+  desc "Kafka container should be running"
+
+  describe docker_container "kafka" do
+    it { should exist }
+    it { should be_running }
+    its("image") { should eq "wurstmeister/kafka" }
+    its("ports") { should eq "0.0.0.0:#{PORT_KAFKA}->#{PORT_KAFKA}/tcp" }
+  end
+
+  describe json({ command: "docker container inspect kafka" }) do
+    its([0, "HostConfig", "NetworkMode"]) { should include "color-tracking-net" }
+  end
+end
+
+control "api-container" do
+  impact 1.0
+  title "API Container"
+  desc "API container should be running"
+
+  describe docker_container "api" do
+    it { should exist }
+    it { should be_running }
+    its("image") { should eq "juanroldan1989/color-tracking-api" }
+    its("ports") { should eq "0.0.0.0:#{PORT_API}->#{PORT_API}/tcp" }
+  end
+
+  describe json({ command: "docker container inspect api" }) do
+    its([0, "HostConfig", "NetworkMode"]) { should include "color-tracking-net" }
+  end
+end
+
+control "karafka-consumer-container" do
+  impact 1.0
+  title "Karafka Consumer Container"
+  desc "Karafka Consumer container should be running"
+
+  describe docker_container "karafka-consumer" do
+    it { should exist }
+    it { should be_running }
+    its("image") { should eq "juanroldan1989/color-tracking-api" }
+    its("ports") { should eq "0.0.0.0:#{PORT_KARAFKA}->3000/tcp" }
+  end
+
+  describe json({ command: "docker container inspect karafka-consumer" }) do
+    its([0, "HostConfig", "NetworkMode"]) { should include "color-tracking-net" }
+  end
+end
+```
+
+Trigger tests:
 
 ```ruby
 $ cd backend
@@ -164,6 +257,10 @@ $ cd backend/infrastructure/tests
 
 $ inspec exec validate_containers_state.rb
 ```
+
+## CI/CD Integration
+
+`[Work In Progress]` Provide Github Actions setup for triggering all frontend/backend and containers tests, THEN deploy.
 
 # Deployment
 
