@@ -1,5 +1,4 @@
 backend/config/master.key
-backend/db/*
 backend/log/*
 backend/log/development.log
 backend/tmp/development_secret.txt
