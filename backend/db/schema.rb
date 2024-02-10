@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_26_231431) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_10_193859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_26_231431) do
     t.datetime "updated_at", null: false
     t.index ["action_id"], name: "index_action_colors_on_action_id"
     t.index ["amount"], name: "index_action_colors_on_amount"
+    t.index ["api_key", "action_id", "color_id"], name: "index_action_colors_on_api_key_and_action_id_and_color_id"
     t.index ["api_key"], name: "index_action_colors_on_api_key"
     t.index ["color_id"], name: "index_action_colors_on_color_id"
   end
