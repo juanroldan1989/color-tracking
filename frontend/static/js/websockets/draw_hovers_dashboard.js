@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var cable = ActionCable.createConsumer('ws://localhost:3000/v1/cable')
+  var cable = ActionCable.createConsumer('ws://localhost:3000/v1/events/cable')
 
   cable.subscriptions.create("HoversChannel", {
     connected: function() {
