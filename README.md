@@ -31,7 +31,7 @@
 # Core Features
 
 <div align="left">
-  <img width="800" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking-screenshot.png" />
+  <img width="800" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking-live-demo.gif" />
 </div>
 
 1. Track `hover` and `click` user events.
