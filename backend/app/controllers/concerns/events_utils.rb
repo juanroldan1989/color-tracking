@@ -40,6 +40,10 @@ module EventsUtils
       end
     end
 
+    def redis
+      @redis ||= Redis.new(host: "redis")
+    end
+
     def stream
       case action_title
       when Action::CLICK

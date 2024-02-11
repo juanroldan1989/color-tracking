@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   namespace :v2 do
     resources :events, only: [:create, :index]
   end
+
+  namespace :v3 do
+    resources :events, only: [:create, :index]
+  end
 end
