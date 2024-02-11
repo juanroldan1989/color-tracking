@@ -18,6 +18,17 @@ services:
         awslogs-region: us-east-1
         awslogs-stream-prefix: postgres
 
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: color-tracking
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: redis
+
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
