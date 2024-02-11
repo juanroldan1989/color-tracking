@@ -29,6 +29,11 @@ module Backend
           headers: :any,
           methods: [:get, :post]
           # if: proc { |env| env["HTTP_HOST"] == "api.example.com" }
+
+        resource "/v2/events",
+          headers: :any,
+          methods: [:get, :post]
+          # if: proc { |env| env["HTTP_HOST"] == "api.example.com" }
       end
     end
 

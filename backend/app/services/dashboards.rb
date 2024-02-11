@@ -17,4 +17,19 @@ class Dashboards
       }
     end.compact
   end
+
+  def self.results_from_redis(api_key:, action_name:, redis: nil)
+    Colors.list.map do |color_name|
+      key = "#{api_key}_#{action_name}_#{color_name}"
+      value = redis.get(key).to_i
+
+      next unless value.positive?
+
+      {
+        "action" => action_name,
+        "color" => color_name,
+        "amount" => value
+      }
+    end
+  end
 end
