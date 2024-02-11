@@ -34,11 +34,13 @@
   <img width="800" src="https://github.com/juanroldan1989/color-tracking/blob/main/color-tracking-live-demo.gif" />
 </div>
 
-1. Track `hover` and `click` user events.
-
-2. Record data either in `real time` or through `background processing`.
-
-3. Display data through `dashboards` as close to real time as possible.
+- Real-time **tracking** and **displaying** of user events (clicks and mouseover actions).
+- User events information stored in database (**PostgreSQL** & **Redis** supported).
+- Events stats shared via **Action Cable** and displayed to subscribed clients or specific clients via **polling** JS requests.
+- Backend implementd with **Ruby on Rails**, **Kafka** and **Zookeeper**.
+- Deployment workflow through **AWS ECS** script.
+- Infrastructure managed through **Terraform** (work in progress).
+- Deployment workflow through **Terraform** and integrated within **Github Actions** (CI/CD) into **AWS**. (work in progress)
 
 ## Idea inception
 
