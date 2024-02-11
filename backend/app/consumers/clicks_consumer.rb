@@ -3,11 +3,11 @@
 class ClicksConsumer < ApplicationConsumer
   # Consumes the messages by inserting all of them in one go into the DB
   def consume
-    if ENV["REDIS_AS_DB"]
+    if ENV["REDIS_AS_DB"] == "true"
       redis = Redis.new(host: "redis")
 
-      action_name = Action.find(messages.payloads[0]["action_id"]).name
-      color_name = Color.find(messages.payloads[0]["color_id"]).name
+      action_name = messages.payloads[0]["action_name"]
+      color_name = messages.payloads[0]["color_name"]
 
       key = "#{messages.payloads[0]["api_key"]}_#{action_name}_#{color_name}"
       value = redis.get(key)
