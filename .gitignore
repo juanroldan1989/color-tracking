@@ -7,3 +7,8 @@ backend/tmp/development_secret.txt
 backend/tmp/restart.txt
 backend/tmp/pids/server.pid
 backend/infrastructure/.DS_Store
+
+### AWS ECS
+ecs-cli.asc
+ecs.cer
+public_key_ecs.txt
