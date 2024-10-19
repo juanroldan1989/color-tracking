@@ -42,6 +42,8 @@
 - Infrastructure managed through **Terraform** (work in progress).
 - Deployment workflow through **Terraform** and integrated within **Github Actions** (CI/CD) into **AWS**. (work in progress)
 
+![Screenshot 2024-10-19 at 21 50 49](https://github.com/user-attachments/assets/2c3f9382-9bce-4531-a0a8-ba504d05a899)
+
 ## Idea inception
 
 <div align="left">
